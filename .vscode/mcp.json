@@ -1,0 +1,38 @@
+{
+	"servers": {
+		"mysql": {
+			"command": "uvx",
+			"args": [
+				"--from",
+				"mysql-mcp-server",
+				"mysql_mcp_server"
+			],
+			"env": {
+				"MYSQL_HOST": "localhost",
+				"MYSQL_PORT": "3306",
+				"MYSQL_USER": "root",
+				"MYSQL_PASSWORD": "Password123",
+				"MYSQL_DATABASE": "Demo"
+			},
+			"type": "stdio"
+		},
+		"playwright": {
+			"command": "npx",
+			"args": [
+				"@playwright/mcp@latest"
+			],
+			"type": "stdio"
+		},
+		"com.atlassian/atlassian-mcp-server": {
+			"type": "http",
+			"url": "https://mcp.atlassian.com/v1/mcp",
+			"gallery": "https://api.mcp.github.com",
+			"version": "1.1.2"
+		},
+		"github": {
+			"type": "http",
+			"url": "https://api.githubcopilot.com/mcp/"
+		}
+	},
+	"inputs": []
+}
