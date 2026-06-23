@@ -15,7 +15,7 @@ test.beforeAll(async () => {
   const connection = await mysql.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    password: process.env.DB_PASSWORD || 'Password123',
     database: process.env.DB_NAME || 'Demo',
     port: Number(process.env.DB_PORT || 3306),
   });
@@ -44,8 +44,13 @@ test('Demoblaze signup and login', async ({ page }) => {
   expect(signupDialog.message()).toContain('Sign up successful');
   await signupDialog.accept();
 
+  // Ensure signup modal is fully dismissed before opening login modal.
+  await page.locator('#signInModal .btn-secondary').click({ force: true });
+  await expect(page.locator('#signInModal')).toBeHidden();
+
   // Login
   await page.locator('#login2').click({ force: true });
+  await expect(page.locator('#logInModal')).toBeVisible();
   await page.locator('#loginusername').fill(signupUsername);
   await page.locator('#loginpassword').fill(signupPassword);
   await page.locator('#logInModal .btn-primary').click();
